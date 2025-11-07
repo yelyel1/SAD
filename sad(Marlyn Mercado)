@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapilya Management System 💒</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      /* Background image path may need adjustment on your system */
+      background-image: url('c:/Users/LAB_A/Downloads/OIP.jpg'); 
+      background-size: cover;
+      background-position: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      text-align: center;
+      color: #2e4a2d;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 5px;
+      color: #333;
+      margin-top: 25px;
+    }
+
+    form div {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"], input[type="password"], input[type="tel"], textarea, input[type="file"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    input[type="radio"] {
+      margin-right: 5px;
+    }
+
+    input[type="submit"], button, .nav-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 5px;
+      margin-bottom: 5px;
+    }
+
+    input[type="submit"]:hover, button:hover, .nav-btn:hover {
+      background-color: #45a049;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    footer {
+      text-align: center;
+      color: #333;
+      font-size: 14px;
+      margin-top: 25px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .logout-btn {
+      background-color: #d9534f;
+      float: right;
+    }
+
+    .logout-btn:hover {
+      background-color: #c9302c;
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .link a {
+      color: #4CAF50;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .link a:hover {
+      text-decoration: underline;
+    }
+
+    #successMessage {
+      color: green;
+      text-align: center;
+      display: none;
+    }
+
+    .nav-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .document-list {
+        margin-top: 15px;
+        padding: 10px;
+        border: 1px solid #eee;
+        background-color: #f9f9f9;
+        border-radius: 4px;
+    }
+    
+    .document-item {
+        margin-bottom: 8px;
+        padding: 5px;
+        border-bottom: 1px dotted #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .document-item a {
+        color: #007bff;
+        text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="loginPage">
+    <h1>Kapilya Management System 💒</h1>
+    <p style="text-align:center;">Please login to access the system.</p>
+
+    <form id="loginForm">
+      <div>
+        <label>Username:</label>
+        <input type="text" id="username" placeholder="Enter username" required>
+      </div>
+
+      <div>
+        <label>Password:</label>
+        <input type="password" id="password" placeholder="Enter password" required>
+      </div>
+
+      <input type="submit" value="Login">
+    </form>
+
+    <div class="link">
+      <p>Don't have an account? <a href="#" id="goToSignup">Sign Up</a></p>
+    </div>
+  </div>
+
+  <div class="container hidden" id="signupPage">
+    <h1>Create Account 💒</h1>
+    <p style="text-align:center;">Fill up the form below to register.</p>
+
+    <form id="signupForm">
+      <div>
+        <label>New Username:</label>
+        <input type="text" id="newUsername" placeholder="Enter username" required>
+      </div>
+
+      <div>
+        <label>New Password:</label>
+        <input type="password" id="newPassword" placeholder="Enter password" required>
+      </div>
+
+      <div>
+        <label>Confirm Password:</label>
+        <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+      </div>
+
+      <input type="submit" value="Sign Up">
+    </form>
+
+    <div class="link">
+      <p>Already have an account? <a href="#" id="goToLogin">Login</a></p>
+    </div>
+
+    <div id="successMessage">Account created successfully! Redirecting...</div>
+  </div>
+
+  <div class="container hidden" id="registerMemberPage">
+    <h1>Kapilya Management System 💒</h1>
+    <button class="logout-btn" id="logoutBtnTop">Logout</button>
+    <p style="text-align:center;">Register chapel members and manage them easily.</p>
+
+    <div class="nav-bar">
+        <button class="nav-btn" id="goToRegister">Register Member</button>
+        <button class="nav-btn" id="goToMembersList">View Members</button>
+        <button class="nav-btn" id="goToChoir">Mang-aawit (Choir)</button>
+        <button class="nav-btn" id="goToSecretariat">Kalihiman (Secretariat)</button>
+        <button class="nav-btn" id="goToFinance">Finance</button>
+    </div>
+
+    <h2>Register New Member</h2>
+    <form id="memberForm">
+      <div>
+        <label>Full Name:</label>
+        <input type="text" id="name" placeholder="Enter full name" required>
+      </div>
+
+      <div>
+        <label>Address:</label>
+        <textarea id="address" placeholder="Enter address" required></textarea>
+      </div>
+
+      <div>
+        <label>Contact Number:</label>
+        <input type="tel" id="contact" placeholder="Enter contact number" required>
+      </div>
+
+      <div>
+        <label>Gender:</label>
+        <input type="radio" name="gender" value="Male" required> Male
+        <input type="radio" name="gender" value="Female"> Female
+      </div>
+
+      <input type="submit" value="Register Member">
+    </form>
+
+    <footer>
+      © 2025 Kapilya Management System | All Rights Reserved
+    </footer>
+  </div>
+
+  <div class="container hidden" id="membersListPage">
+    <h1>Kapilya Management System 💒</h1>
+    <button class="logout-btn" id="logoutBtnList">Logout</button>
+    <p style="text-align:center;">List of all registered chapel members.</p>
+
+    <div class="nav-bar">
+        <button class="nav-btn" id="backToRegister">Register Member</button>
+        <button class="nav-btn" id="viewMembersList">View Members</button>
+        <button class="nav-btn" id="goToChoir2">Mang-aawit (Choir)</button>
+        <button class="nav-btn" id="goToSecretariat2">Kalihiman (Secretariat)</button>
+        <button class="nav-btn" id="goToFinance2">Finance</button>
+    </div>
+
+    <h2>Current Members</h2>
+    <table id="memberTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Full Name</th>
+          <th>Address</th>
+          <th>Contact</th>
+          <th>Gender</th>
+          <th>Date Registered</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <footer>
+      © 2025 Kapilya Management System | All Rights Reserved
+    </footer>
+  </div>
+  
+  <div class="container hidden" id="choirPage">
+    <h1>Mang-aawit (Choir) Documents 🎶</h1>
+    <button class="logout-btn" id="logoutBtnChoir">Logout</button>
+    <p style="text-align:center;">Pamahalaan ang mga sheet music, kanta, at iskedyul ng choir.</p>
+
+    <div class="nav-bar">
+        <button class="nav-btn" id="backToRegisterChoir">Back to Main</button>
+    </div>
+
+    <h2>Upload New Document</h2>
+    <form id="choirDocumentForm">
+        <div>
+            <label>Title/Description:</label>
+            <input type="text" id="choirDocTitle" placeholder="e.g., Sunday Mass Songs - Dec 2025" required>
+        </div>
+        <div>
+            <label>Select File (e.g., PDF, DOCX):</label>
+            <input type="file" id="choirDocFile" required>
+        </div>
+        <input type="submit" value="Upload Document">
+    </form>
+    
+    <h2>Uploaded Documents</h2>
+    <div class="document-list" id="choirDocumentList">
+        <p style="text-align:center; color:#888;">No documents uploaded yet.</p>
+    </div>
+
+    <footer>
+      © 2025 Kapilya Management System | All Rights Reserved
+    </footer>
+  </div>
+  
+  <div class="container hidden" id="secretariatPage">
+    <h1>Kalihiman (Secretariat) Documents 📝</h1>
+    <button class="logout-btn" id="logoutBtnSecretariat">Logout</button>
+    <p style="text-align:center;">Pamahalaan ang mga minutes of meeting, resolusyon, at official memos.</p>
+
+    <div class="nav-bar">
+        <button class="nav-btn" id="backToRegisterSecretariat">Back to Main</button>
+    </div>
+
+    <h2>Upload New Document</h2>
+    <form id="secretariatDocumentForm">
+        <div>
+            <label>Title/Description:</label>
+            <input type="text" id="secretariatDocTitle" placeholder="e.g., Minutes of Meeting - Nov 5, 2025" required>
+        </div>
+        <div>
+            <label>Select File (e.g., PDF, DOCX):</label>
+            <input type="file" id="secretariatDocFile" required>
+        </div>
+        <input type="submit" value="Upload Document">
+    </form>
+    
+    <h2>Uploaded Documents</h2>
+    <div class="document-list" id="secretariatDocumentList">
+        <p style="text-align:center; color:#888;">No documents uploaded yet.</p>
+    </div>
+
+    <footer>
+      © 2025 Kapilya Management System | All Rights Reserved
+    </footer>
+  </div>
+
+  <div class="container hidden" id="financePage">
+    <h1>Finance Documents 💰</h1>
+    <button class="logout-btn" id="logoutBtnFinance">Logout</button>
+    <p style="text-align:center;">Pamahalaan ang mga financial report, budget, at donasyon records.</p>
+
+    <div class="nav-bar">
+        <button class="nav-btn" id="backToRegisterFinance">Back to Main</button>
+    </div>
+
+    <h2>Upload New Document</h2>
+    <form id="financeDocumentForm">
+        <div>
+            <label>Title/Description:</label>
+            <input type="text" id="financeDocTitle" placeholder="e.g., 2025 Monthly Financial Report" required>
+        </div>
+        <div>
+            <label>Select File (e.g., PDF, Spreadsheet):</label>
+            <input type="file" id="financeDocFile" required>
+        </div>
+        <input type="submit" value="Upload Document">
+    </form>
+    
+    <h2>Uploaded Documents</h2>
+    <div class="document-list" id="financeDocumentList">
+        <p style="text-align:center; color:#888;">No documents uploaded yet.</p>
+    </div>
+
+    <footer>
+      © 2025 Kapilya Management System | All Rights Reserved
+    </footer>
+  </div>
+
+  <script>
+    // --- PAGE ELEMENTS & BUTTONS ---
+    const loginPage = document.getElementById("loginPage");
+    const signupPage = document.getElementById("signupPage");
+    const registerMemberPage = document.getElementById("registerMemberPage");
+    const membersListPage = document.getElementById("membersListPage");
+    const choirPage = document.getElementById("choirPage");
+    const secretariatPage = document.getElementById("secretariatPage");
+    const financePage = document.getElementById("financePage");
+    
+    const goToSignup = document.getElementById("goToSignup");
+    const goToLogin = document.getElementById("goToLogin");
+    
+    // Admin specific buttons
+    const goToSecretariat = document.getElementById("goToSecretariat");
+    const goToFinance = document.getElementById("goToFinance");
+    const goToSecretariat2 = document.getElementById("goToSecretariat2");
+    const goToFinance2 = document.getElementById("goToFinance2");
+
+    // All logout buttons
+    const logoutBtnTop = document.getElementById("logoutBtnTop");
+    const logoutBtnList = document.getElementById("logoutBtnList");
+    const logoutBtnChoir = document.getElementById("logoutBtnChoir");
+    const logoutBtnSecretariat = document.getElementById("logoutBtnSecretariat");
+    const logoutBtnFinance = document.getElementById("logoutBtnFinance");
+
+    // --- USER DATA (Admin Role Added) ---
+    let users = JSON.parse(localStorage.getItem("users")) || [
+      { username: "admin", password: "1234", role: "admin" },
+      { username: "member", password: "5678", role: "standard" } 
+    ];
+    
+    let currentUserRole = null; 
+
+    // --- CENTRAL NAVIGATION FUNCTION ---
+    function showPage(pageToShow) {
+        // Hide all main containers
+        loginPage.classList.add("hidden");
+        signupPage.classList.add("hidden");
+        registerMemberPage.classList.add("hidden");
+        membersListPage.classList.add("hidden");
+        choirPage.classList.add("hidden");
+        secretariatPage.classList.add("hidden");
+        financePage.classList.add("hidden");
+
+        // Show the selected page
+        pageToShow.classList.remove("hidden");
+    }
+
+    // --- ACCESS CONTROL FUNCTION ---
+    function updateAccess(role) {
+        // Elements only visible to Admin
+        const adminElements = [goToSecretariat, goToFinance, goToSecretariat2, goToFinance2];
+        
+        if (role === 'admin') {
+            adminElements.forEach(el => el.style.display = 'inline-block');
+        } else {
+            adminElements.forEach(el => el.style.display = 'none');
+            // Prevent standard users from staying on restricted pages
+            if (pageToShow === secretariatPage || pageToShow === financePage) {
+                 showPage(registerMemberPage); 
+            }
+        }
+    }
+
+    // --- PAGE SWITCHING LISTENERS ---
+
+    goToSignup.addEventListener("click", () => { showPage(signupPage); });
+    goToLogin.addEventListener("click", () => { showPage(loginPage); });
+    
+    // Member Pages Navigation
+    document.getElementById("goToMembersList").addEventListener("click", () => { showPage(membersListPage); });
+    document.getElementById("goToRegister").addEventListener("click", () => { showPage(registerMemberPage); });
+    document.getElementById("backToRegister").addEventListener("click", () => { showPage(registerMemberPage); });
+    
+    // Document Pages Navigation 
+    document.getElementById("goToChoir").addEventListener("click", () => { showPage(choirPage); });
+    document.getElementById("goToChoir2").addEventListener("click", () => { showPage(choirPage); });
+    
+    // Admin Restricted Pages Navigation
+    goToSecretariat.addEventListener("click", () => { showPage(secretariatPage); });
+    goToFinance.addEventListener("click", () => { showPage(financePage); });
+    goToSecretariat2.addEventListener("click", () => { showPage(secretariatPage); });
+    goToFinance2.addEventListener("click", () => { showPage(financePage); });
+
+    // Back to Main (from document pages)
+    document.getElementById("backToRegisterChoir").addEventListener("click", () => { showPage(registerMemberPage); });
+    document.getElementById("backToRegisterSecretariat").addEventListener("click", () => { showPage(registerMemberPage); });
+    document.getElementById("backToRegisterFinance").addEventListener("click", () => { showPage(registerMemberPage); });
+
+
+    // --- AUTHENTICATION ---
+
+    // SIGNUP FUNCTION (New users default to 'standard' role)
+    document.getElementById("signupForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const newUsername = document.getElementById("newUsername").value;
+      const newPassword = document.getElementById("newPassword").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (newPassword !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+      
+      const userExists = users.some(u => u.username === newUsername);
+      if (userExists) {
+        alert("Username already exists!");
+        return;
+      }
+
+      users.push({ username: newUsername, password: newPassword, role: "standard" }); 
+      localStorage.setItem("users", JSON.stringify(users));
+
+      document.getElementById("successMessage").style.display = "block";
+      setTimeout(() => {
+        document.getElementById("successMessage").style.display = "none";
+        showPage(loginPage);
+      }, 2000);
+    });
+
+    // LOGIN FUNCTION (Checks role and updates access)
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      const user = users.find(u => u.username === username && u.password === password);
+
+      if (user) {
+        currentUserRole = user.role;
+        updateAccess(currentUserRole);
+        showPage(registerMemberPage);
+      } else {
+        alert("Invalid username or password!");
+      }
+    });
+
+    // LOGOUT FUNCTION (Resets role and shows login page)
+    function logout() {
+        currentUserRole = null;
+        updateAccess(null);
+        showPage(loginPage);
+    }
+    logoutBtnTop.addEventListener("click", logout);
+    logoutBtnList.addEventListener("click", logout);
+    logoutBtnChoir.addEventListener("click", logout);
+    logoutBtnSecretariat.addEventListener("click", logout);
+    logoutBtnFinance.addEventListener("click", logout);
+
+
+    // --- MEMBER REGISTRATION LOGIC ---
+    const memberForm = document.getElementById("memberForm");
+    const memberTableBody = document.getElementById("memberTable").querySelector("tbody");
+    let memberId = 1;
+
+    let members = JSON.parse(localStorage.getItem("members")) || [];
+    if (members.length > 0) {
+        memberId = members[members.length - 1].id + 1;
+        renderMembers();
+    }
+    
+    function renderMembers() {
+        memberTableBody.innerHTML = '';
+        members.forEach(member => {
+            const row = `<tr>
+                <td>${member.id}</td>
+                <td>${member.name}</td>
+                <td>${member.address}</td>
+                <td>${member.contact}</td>
+                <td>${member.gender}</td>
+                <td>${member.date}</td>
+            </tr>`;
+            memberTableBody.insertAdjacentHTML("beforeend", row);
+        });
+    }
+
+    memberForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const address = document.getElementById("address").value;
+      const contact = document.getElementById("contact").value;
+      const gender = document.querySelector('input[name="gender"]:checked').value;
+
+      const date = new Date().toLocaleDateString();
+
+      const newMember = {
+          id: memberId++,
+          name,
+          address,
+          contact,
+          gender,
+          date
+      };
+
+      members.push(newMember);
+      localStorage.setItem("members", JSON.stringify(members));
+      renderMembers();
+      
+      alert("Member successfully registered!");
+      memberForm.reset();
+    });
+
+    renderMembers();
+
+    // --- DOCUMENT MANAGEMENT LOGIC ---
+    let documents = {
+        choir: JSON.parse(localStorage.getItem("choirDocs")) || [],
+        secretariat: JSON.parse(localStorage.getItem("secretariatDocs")) || [],
+        finance: JSON.parse(localStorage.getItem("financeDocs")) || []
+    };
+    
+    function handleDocumentUpload(e, docType) {
+        e.preventDefault();
+        
+        // --- ADMIN UPLOAD CHECK ---
+        if ((docType === 'secretariat' || docType === 'finance') && currentUserRole !== 'admin') {
+            alert("Access Denied: Only Administrators can upload documents here.");
+            return;
+        }
+
+        const titleInput = document.getElementById(`${docType}DocTitle`);
+        const fileInput = document.getElementById(`${docType}DocFile`);
+        
+        const file = fileInput.files[0];
+        
+        if (!file) {
+            alert("Please select a file to upload.");
+            return;
+        }
+
+        // --- SIMULATED SAVE ---
+        const newDoc = {
+            id: Date.now(),
+      
